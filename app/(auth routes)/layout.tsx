@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, startTransition } from "react";
 import { useRouter } from "next/navigation";
 
 interface AuthLayoutProps {
@@ -13,8 +13,13 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   const router = useRouter();
 
   useEffect(() => {
+    // 1. Примусово оновлюємо серверні дані
     router.refresh();
-    setLoading(false);
+
+    // 2. Безпечно оновлюємо стан loading
+    startTransition(() => {
+      setLoading(false);
+    });
   }, [router]);
 
   return <>{loading ? <div>Loading...</div> : children}</>;
