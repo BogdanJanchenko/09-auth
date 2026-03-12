@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 import { Note } from "@/types/note";
 import Modal from "@/components/Modal/Modal";
 
-import css from "./NoteDetails.module.css";
+import css from "./NotePreview.module.css";
 
-const NoteDetailsClient = () => {
+const NotePreviewClient = () => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const close = () => router.back();
@@ -37,4 +37,4 @@ const NoteDetailsClient = () => {
   );
 };
 
-export default NoteDetailsClient;
+export default NotePreviewClient;
