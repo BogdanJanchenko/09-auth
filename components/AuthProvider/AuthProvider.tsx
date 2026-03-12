@@ -1,7 +1,7 @@
 "use client";
 
 import { checkSession, getMe } from "@/lib/api/clientApi";
-import { useAuthStore } from "@/lib/stores/authStore";
+import { useAuthStore } from "@/lib/store/authStore";
 import { useEffect } from "react";
 
 interface AuthProviderProps {
@@ -11,7 +11,7 @@ interface AuthProviderProps {
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const setUser = useAuthStore((state) => state.setUser);
   const clearIsAuthenticated = useAuthStore(
-    (state) => state.clearIsAuthenticated
+    (state) => state.clearIsAuthenticated,
   );
 
   useEffect(() => {

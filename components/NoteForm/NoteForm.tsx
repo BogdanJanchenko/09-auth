@@ -8,7 +8,7 @@ import { categories } from "@/app/(private routes)/notes/filter/@sidebar/default
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "@/lib/api/clientApi";
 import toast from "react-hot-toast";
-import { useNoteDraftStore } from "@/lib/stores/noteStore";
+import { useNoteDraftStore } from "@/lib/store/noteStore";
 
 const NoteForm = () => {
   interface OrderFormValues {
@@ -25,7 +25,7 @@ const NoteForm = () => {
   const handleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     setDraft({
       ...draft,

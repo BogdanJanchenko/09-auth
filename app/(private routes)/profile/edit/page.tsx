@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthStore } from "@/lib/stores/authStore";
+import { useAuthStore } from "@/lib/store/authStore";
 import css from "../ProfilePage.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ const EditProfile = () => {
 
   const handleSubmit = async (
     values: OrderFormValues,
-    actions: FormikHelpers<OrderFormValues>
+    actions: FormikHelpers<OrderFormValues>,
   ) => {
     try {
       if (!user) {

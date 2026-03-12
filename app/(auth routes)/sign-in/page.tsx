@@ -5,7 +5,7 @@ import css from "./SignInPage.module.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { useAuthStore } from "@/lib/stores/authStore";
+import { useAuthStore } from "@/lib/store/authStore";
 
 const SignIn = () => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const SignIn = () => {
     } catch (error) {
       const err = error as AxiosError<{ error?: string }>;
       setError(
-        err.response?.data?.error ?? err.message ?? "Oops... some error"
+        err.response?.data?.error ?? err.message ?? "Oops... some error",
       );
     }
   };
