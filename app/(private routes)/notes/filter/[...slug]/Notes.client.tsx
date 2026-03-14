@@ -47,8 +47,12 @@ const NotesClient = ({ category }: NotesClient) => {
       <div className={css.app}>
         <Toaster position="top-right" reverseOrder={false} />
         <header className={css.toolbar}>
-          <SearchBox setSearchQuery={setSearchQuery} />
-          {totalPages > 1 && (
+          <SearchBox
+            setSearchQuery={setSearchQuery}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
+          {notes && totalPages > 1 && (
             <Pagination
               totalPages={totalPages}
               currentPage={currentPage}
@@ -59,7 +63,7 @@ const NotesClient = ({ category }: NotesClient) => {
             Create note +
           </Link>
         </header>
-        <NoteList notes={notes} />
+        {notes && <NoteList notes={notes} />}
       </div>
     </>
   );

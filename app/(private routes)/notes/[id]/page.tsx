@@ -1,4 +1,4 @@
-import { fetchNoteById } from "@/lib/api/clientApi";
+import { fetchNoteById } from "@/lib/api/serverApi";
 import {
   dehydrate,
   HydrationBoundary,
@@ -18,13 +18,13 @@ export async function generateMetadata({
   const fullNote = await fetchNoteById(id);
 
   return {
-    title: `Note: ${fullNote.title}`,
-    description: fullNote.content
+    title: `Note: ${fullNote?.title}`,
+    description: fullNote?.content
       ? fullNote.content.slice(0, 30)
       : "Note details page.",
     openGraph: {
-      title: `Note: ${fullNote.title}`,
-      description: fullNote.content
+      title: `Note: ${fullNote?.title}`,
+      description: fullNote?.content
         ? fullNote.content.slice(0, 30)
         : "Note details page.",
       url: `https://notehub.com/notes/${id}`,
@@ -40,8 +40,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `Note: ${fullNote.title}`,
-      description: fullNote.content
+      title: `Note: ${fullNote?.title}`,
+      description: fullNote?.content
         ? fullNote.content.slice(0, 30)
         : "Note details page.",
       images: ["https://ac.goit.global/fullstack/react/og-meta.jpg"],

@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 const EditProfile = () => {
   const router = useRouter();
   const fieldId = useId();
-  const user = useAuthStore((state) => state.user);
+  const { user, setUser } = useAuthStore();
 
   interface OrderFormValues {
     username: string;
@@ -32,10 +32,12 @@ const EditProfile = () => {
         toast.error("User not found");
         return;
       }
-      await updateMe({
-        email: user.email,
+
+      const response = await updateMe({
         username: values.username,
       });
+      setUser(response);
+
       toast.success("Profile updated successfully!");
       actions.resetForm();
       router.push("/profile");

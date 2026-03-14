@@ -11,7 +11,7 @@ import { Metadata } from "next";
 type Category = NoteTag | "All";
 
 interface NotesByCategoryProps {
-  params: { slug: Category[] };
+  params: Promise<{ slug: Category[] }>;
 }
 
 const formatTag = (category?: Category): NoteTag | undefined => {

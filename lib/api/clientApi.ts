@@ -16,7 +16,7 @@ export const PER_PAGE = 12;
 export const fetchNotes = async (
   search: string,
   page: number,
-  tag?: NoteTag
+  tag?: NoteTag,
 ): Promise<FetchNotesResponse> => {
   const response = await nextServer.get<FetchNotesResponse>("/notes", {
     params: { search, page, perPage: PER_PAGE, tag },
@@ -97,16 +97,11 @@ export const getMe = async (): Promise<User> => {
 };
 
 export interface UpdateMeProps {
-  email: string;
   username: string;
 }
 
-export const updateMe = async ({
-  email,
-  username,
-}: UpdateMeProps): Promise<User> => {
+export const updateMe = async ({ username }: UpdateMeProps): Promise<User> => {
   const response = await nextServer.patch<User>("/users/me", {
-    email,
     username,
   });
   return response.data;

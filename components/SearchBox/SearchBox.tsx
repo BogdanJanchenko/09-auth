@@ -2,9 +2,15 @@ import css from "./SearchBox.module.css";
 
 interface SearchBoxProps {
   setSearchQuery: (query: string) => void;
+  setCurrentPage: (currentPage: number) => void;
+  currentPage: number;
 }
 
-const SearchBox = ({ setSearchQuery }: SearchBoxProps) => {
+const SearchBox = ({
+  setSearchQuery,
+  setCurrentPage,
+  currentPage,
+}: SearchBoxProps) => {
   return (
     <input
       className={css.input}
@@ -12,6 +18,7 @@ const SearchBox = ({ setSearchQuery }: SearchBoxProps) => {
       placeholder="Search notes"
       onChange={(event) => {
         setSearchQuery(event.currentTarget.value);
+        setCurrentPage(currentPage);
       }}
     />
   );

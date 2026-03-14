@@ -47,22 +47,6 @@ export async function proxy(request: NextRequest) {
             if (parsed.refreshToken) {
               cookieStore.set("refreshToken", parsed.refreshToken, options);
             }
-
-            if (isPublicRoute) {
-              return NextResponse.redirect(new URL("/", request.url), {
-                headers: {
-                  Cookie: cookieStore.toString(),
-                },
-              });
-            }
-
-            if (isPrivateRoute) {
-              return NextResponse.next({
-                headers: {
-                  Cookie: cookieStore.toString(),
-                },
-              });
-            }
           }
         }
 
@@ -81,17 +65,18 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (isPublicRoute) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
-  if (isPrivateRoute) {
-    return NextResponse.next();
+  if (accessToken) {
+    if (isPublicRoute) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+    if (isPrivateRoute) {
+      return NextResponse.next();
+    }
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/profile/:path*", "/notes/:path*"],
+  matcher: ["/profile/:path*", "/notes/:path*", "/sign-in", "/sign-up"],
 };
