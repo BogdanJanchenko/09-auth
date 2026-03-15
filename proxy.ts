@@ -11,7 +11,6 @@ export async function proxy(request: NextRequest) {
   const accessToken = cookieStore.get("accessToken")?.value;
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
-  //Шлях на який намагається перейти користувач
   const { pathname } = request.nextUrl;
 
   const isPublicRoute = publicRoutes.some((route) =>
@@ -50,13 +49,7 @@ export async function proxy(request: NextRequest) {
           }
         }
 
-        if (isPublicRoute) {
-          return NextResponse.next();
-        }
-
-        if (isPrivateRoute) {
-          return NextResponse.redirect(new URL("/sign-in", request.url));
-        }
+        return NextResponse.next();
       }
 
       return NextResponse.redirect(new URL("/sign-in", request.url));
@@ -65,13 +58,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (accessToken) {
-    if (isPublicRoute) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
-    if (isPrivateRoute) {
-      return NextResponse.next();
-    }
+  if (isPublicRoute && accessToken) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();

@@ -1,5 +1,3 @@
-"use client";
-
 import css from "./Notes.module.css";
 
 import Link from "next/link";
@@ -42,30 +40,29 @@ const NotesClient = ({ category }: NotesClient) => {
   const notes = data?.notes ?? [];
   const totalPages: number = data?.totalPages ?? 1;
 
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+  };
+
   return (
-    <>
-      <div className={css.app}>
-        <Toaster position="top-right" reverseOrder={false} />
-        <header className={css.toolbar}>
-          <SearchBox
-            setSearchQuery={setSearchQuery}
-            setCurrentPage={setCurrentPage}
+    <div className={css.app}>
+      <Toaster position="top-right" reverseOrder={false} />
+      <header className={css.toolbar}>
+        <SearchBox setSearchQuery={handleSearchChange} />
+        {notes && totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
             currentPage={currentPage}
+            onPageChange={setCurrentPage}
           />
-          {notes && totalPages > 1 && (
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onPageChange={setCurrentPage}
-            />
-          )}
-          <Link className={css.button} href="/notes/action/create">
-            Create note +
-          </Link>
-        </header>
-        {notes && <NoteList notes={notes} />}
-      </div>
-    </>
+        )}
+        <Link className={css.button} href="/notes/action/create">
+          Create note +
+        </Link>
+      </header>
+      {notes && <NoteList notes={notes} />}
+    </div>
   );
 };
 

@@ -26,10 +26,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const category = formatTag(slug?.[0]) ?? "All";
   return {
-    title: `Notes categoty: ${category}`,
+    title: `Notes category: ${category}`,
     description: `Filtering notes for a category: ${category}`,
     openGraph: {
-      title: `Notes categoty: ${category}`,
+      title: `Notes category: ${category}`,
       description: `Filtering notes for a category: ${category}`,
       url: `https://notehub.com/notes/filter/${category}`,
       images: [
@@ -44,7 +44,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `Notes categoty: ${category}`,
+      title: `Notes category: ${category}`,
       description: `Filtering notes for a category: ${category}`,
       images: ["https://ac.goit.global/fullstack/react/og-meta.jpg"],
     },
