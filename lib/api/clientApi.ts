@@ -13,14 +13,24 @@ export interface FetchNotesResponse {
 
 export const PER_PAGE = 12;
 
-export const fetchNotes = async (
-  search: string,
-  page: number,
-  tag?: NoteTag,
-): Promise<FetchNotesResponse> => {
+export const fetchNotes = async ({
+  search,
+  page,
+  tag,
+}: {
+  search: string;
+  page: number;
+  tag?: NoteTag;
+}): Promise<FetchNotesResponse> => {
   const response = await nextServer.get<FetchNotesResponse>("/notes", {
-    params: { search, page, perPage: PER_PAGE, tag },
+    params: {
+      search,
+      page,
+      perPage: PER_PAGE,
+      tag,
+    },
   });
+
   return response.data;
 };
 

@@ -26,6 +26,8 @@ export async function proxy(request: NextRequest) {
         const data = await checkSession();
         const setCookie = data.headers["set-cookie"];
 
+        const response = NextResponse.next();
+
         if (setCookie) {
           const cookieArray = Array.isArray(setCookie)
             ? setCookie
@@ -33,6 +35,7 @@ export async function proxy(request: NextRequest) {
 
           for (const cookieStr of cookieArray) {
             const parsed = parse(cookieStr);
+
             const options = {
               expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
               path: parsed.path,
@@ -40,16 +43,20 @@ export async function proxy(request: NextRequest) {
             };
 
             if (parsed.accessToken) {
-              cookieStore.set("accessToken", parsed.accessToken, options);
+              response.cookies.set("accessToken", parsed.accessToken, options);
             }
 
             if (parsed.refreshToken) {
-              cookieStore.set("refreshToken", parsed.refreshToken, options);
+              response.cookies.set(
+                "refreshToken",
+                parsed.refreshToken,
+                options,
+              );
             }
           }
         }
 
-        return NextResponse.next();
+        return response;
       }
 
       return NextResponse.redirect(new URL("/sign-in", request.url));

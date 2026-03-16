@@ -25,8 +25,13 @@ const NotesClient = ({ category }: NotesClient) => {
   const [debounceSearchQuery] = useDebounce(searchQuery, 300);
 
   const { data, isError, error } = useQuery<FetchNotesResponse>({
-    queryKey: ["notes", debounceSearchQuery, currentPage, category],
-    queryFn: () => fetchNotes(debounceSearchQuery, currentPage, category),
+    queryKey: ["notes", debounceSearchQuery, category, currentPage],
+    queryFn: () =>
+      fetchNotes({
+        search: debounceSearchQuery,
+        page: currentPage,
+        tag: category,
+      }),
     placeholderData: keepPreviousData,
   });
 
@@ -48,20 +53,24 @@ const NotesClient = ({ category }: NotesClient) => {
   return (
     <div className={css.app}>
       <Toaster position="top-right" reverseOrder={false} />
+
       <header className={css.toolbar}>
         <SearchBox setSearchQuery={handleSearchChange} />
-        {notes && totalPages > 1 && (
+
+        {notes.length > 0 && totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
           />
         )}
+
         <Link className={css.button} href="/notes/action/create">
           Create note +
         </Link>
       </header>
-      {notes && <NoteList notes={notes} />}
+
+      {notes.length > 0 && <NoteList notes={notes} />}
     </div>
   );
 };
